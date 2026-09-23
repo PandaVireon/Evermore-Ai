@@ -361,24 +361,27 @@
 }
 
 .cac-image{
-  width:100%;
-  height:auto;
-  min-height:0;
-  max-height:none;
-  border-radius:24px;
-  overflow:hidden;
+  width:100% !important;
+  aspect-ratio:4 / 5 !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  padding:0 !important;
+  border-radius:24px !important;
+  overflow:hidden !important;
   background:#0b1b13;
   border:1px solid var(--line);
+  box-sizing:border-box;
 }
 
 .cac-image img{
-  width:100%;
-  height:auto;
-  min-height:0;
-  max-height:none;
-  display:block;
-  object-fit:initial;
-  object-position:center;
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  margin:0 !important;
+  padding:0 !important;
+  object-fit:contain !important;
+  object-position:center !important;
   border-radius:inherit;
 }
 
