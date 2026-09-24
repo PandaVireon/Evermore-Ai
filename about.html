@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#07110d"><title>About Evermore — Evermore</title><style>
+:root{--bg:#050907;--panel:rgba(255,255,255,.045);--line:rgba(255,255,255,.09);--text:#eef8f1;--muted:#93a69b;--green:#22e68a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(circle at 15% 0%,rgba(28,201,115,.13),transparent 32%),radial-gradient(circle at 90% 18%,rgba(255,255,255,.055),transparent 25%),linear-gradient(180deg,#08110d 0%,#050907 55%,#030504 100%);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","Segoe UI",Arial,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.025),transparent 35%,rgba(255,255,255,.018))}
+a{color:inherit;text-decoration:none}button{font:inherit}
+.shell{width:min(760px,calc(100% - 28px));margin:auto;padding:18px 0 46px;position:relative;z-index:1}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em}
+.brand-mark{width:auto;height:36px;display:flex;align-items:center;overflow:visible;background:none;border:none;box-shadow:none;border-radius:0;padding:0}
+.brand-mark img{width:auto;height:36px;display:block;object-fit:contain;padding:0}
+.back{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:#dce9e1;display:grid;place-items:center;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px rgba(255,255,255,.08),0 12px 30px rgba(0,0,0,.2);transition:.2s}
+.back:hover{transform:translateY(-1px);background:rgba(255,255,255,.075)}
+.back svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero{padding:30px 24px 26px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));box-shadow:inset 0 1px rgba(255,255,255,.1),0 24px 70px rgba(0,0,0,.28);overflow:hidden;position:relative}
+.hero:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;right:-90px;top:-90px;background:rgba(34,230,138,.11);filter:blur(8px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border-radius:999px;background:rgba(34,230,138,.08);border:1px solid rgba(34,230,138,.18);color:#75efb0;font-size:10px;font-weight:800;letter-spacing:.14em}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 14px rgba(34,230,138,.7)}
+h1{margin:18px 0 10px;font-size:clamp(31px,7vw,48px);line-height:1;letter-spacing:-.055em}
+.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.75;max-width:610px}
+.updated{margin-top:17px;color:#71847a;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.grid{margin-top:16px;display:grid;gap:12px}
+.card{border:1px solid rgba(255,255,255,.075);border-radius:22px;background:rgba(255,255,255,.035);padding:21px;box-shadow:inset 0 1px rgba(255,255,255,.055)}
+.card h2{font-size:16px;margin:0 0 9px;letter-spacing:-.025em}
+.card p,.card li{font-size:12px;line-height:1.8;color:#9bada3}
+.card p{margin:0}.card p+p{margin-top:10px}
+.card ul{margin:9px 0 0;padding-left:19px}
+.card strong{color:#dce9e1}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:13px}
+.feature{padding:15px;border-radius:17px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}
+.feature b{display:block;font-size:12px;margin-bottom:5px}.feature span{font-size:10px;line-height:1.6;color:#80948a}
+.notice{border-color:rgba(34,230,138,.16);background:linear-gradient(145deg,rgba(34,230,138,.07),rgba(255,255,255,.025))}
+.notice h2{display:flex;align-items:center;gap:9px}
+.notice-icon{width:27px;height:27px;border-radius:9px;display:grid;place-items:center;background:rgba(34,230,138,.11);color:#62eda5}
+.notice-icon svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.contact{margin-top:16px;padding:20px;border-radius:22px;text-align:center;border:1px solid rgba(255,255,255,.075);background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.025))}
+.contact h2{margin:0 0 7px;font-size:16px}.contact p{margin:0 auto 15px;max-width:510px;color:var(--muted);font-size:12px;line-height:1.7}
+.home{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:45px;padding:0 18px;border-radius:15px;background:linear-gradient(135deg,#8df5bb,#21d87f);color:#04140c;font-weight:900;font-size:12px;box-shadow:0 14px 35px rgba(21,210,119,.2),inset 0 1px rgba(255,255,255,.65)}
+.home svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+footer{padding:27px 5px 5px;text-align:center;color:#5e7067;font-size:10px;line-height:1.7}
+@media(max-width:520px){.shell{width:min(100% - 20px,760px);padding-top:12px}.hero{padding:25px 19px 22px;border-radius:24px}.card{padding:18px;border-radius:19px}.feature-grid{grid-template-columns:1fr}}
+</style></head><body><div class="shell">
+<header class="topbar"><a class="brand" href="index.html" aria-label="Evermore home"><span class="brand-mark"><img src="logo.png" alt="Evermore"></span></a><a class="back" href="index.html" aria-label="Back to home"><svg viewBox="0 0 24 24"><path d="M19 12H5"></path><path d="m11 18-6-6 6-6"></path></svg></a></header>
+
+<section class="hero"><span class="eyebrow"><span class="dot"></span> ABOUT EVERMORE</span><h1>Built for the future of digital work.</h1><p>Evermore is a digital platform designed to connect people with AI-powered tools, training opportunities, remote work pathways, creative capabilities, and digital learning in one modern ecosystem.</p><div class="updated">AI · Skills · Opportunities · Digital growth</div></section>
+<main class="grid">
+<section class="card"><h2>What is Evermore?</h2><p>Evermore brings together practical AI experiences and digital opportunities through a single platform. Members can access AI training tasks, selected outsourced remote opportunities, EverAI assistance, creative generation tools, and the Evermore Skills Academy, depending on their membership level.</p><p>The platform is designed with a simple goal: make useful AI capabilities, digital skills, and new forms of online opportunity easier to access from one place.</p></section>
+<section class="card notice"><h2><span class="notice-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 4.5 3.1 7.8 8 9 4.9-1.2 8-4.5 8-9V7l-8-4Z"></path><path d="m8.5 12 2.2 2.2 4.8-5"></path></svg></span>Our approach</h2><p>Evermore is built around accessibility, practical learning, responsible use of technology, and a polished digital experience. The platform continues to evolve as new tools, opportunities, and learning resources are introduced.</p></section>
+<section class="card"><h2>Inside the Evermore ecosystem</h2><div class="feature-grid">
+<div class="feature"><b>AI training tasks</b><span>Opportunities to participate in AI-related training and task workflows, subject to availability.</span></div>
+<div class="feature"><b>Remote opportunities</b><span>Access to selected outsourced remote jobs and digital opportunities based on membership access.</span></div>
+<div class="feature"><b>EverAI</b><span>An AI assistant experience for prompts, productivity, questions, and supported digital workflows.</span></div>
+<div class="feature"><b>Creative generation</b><span>Tools for creating supported video, images, PDFs, flyers, graphics, and other digital content.</span></div>
+<div class="feature"><b>Skills Academy</b><span>Learning resources intended to help members develop practical digital and AI skills.</span></div>
+<div class="feature"><b>Digital assistance</b><span>AI-powered support designed to help members explore, create, learn, and work more efficiently.</span></div>
+</div></section>
+<section class="card"><h2>Membership and access</h2><p>Evermore offers membership packages with different levels of access. Package benefits, pricing, availability, and included features are presented during the membership flow and may be updated through the platform.</p><p>Availability of tasks, remote opportunities, and other platform services can vary by region, demand, qualification, and operational availability.</p></section>
+<section class="card"><h2>Designed with trust in mind</h2><p>Evermore uses a clear payment flow, dedicated policy pages, support channels, and verification procedures to help keep the platform organized and accountable. Payment and refund requests may require information necessary to verify a transaction and protect against misuse.</p></section>
+<section class="card"><h2>Africa and beyond</h2><p>Evermore is designed for participants across Africa and beyond. Certain tasks, services, and opportunities may not be available in every location, and regional availability can change over time.</p></section>
+<section class="card"><h2>A note on opportunities</h2><p>Evermore provides access to tools, training, tasks, and opportunities; participation does not by itself guarantee employment, a particular task assignment, income level, or a specific outcome. Access depends on the relevant membership, availability, eligibility, and platform requirements.</p></section>
+</main>
+<section class="contact"><h2>Have a question?</h2><p>For questions about Evermore, memberships, payments, privacy, or support, contact the Evermore team through the official support email.</p><a class="home" href="mailto:EvermoreOfficial@gmail.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>Contact support</a></section><footer>© 2026 Evermore. All rights reserved.</footer></div></body></html>
