@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Payment Confirmed — Evermore</title>
+
+  <meta
+    name="description"
+    content="Your Evermore payment has been confirmed. Complete your activation on Telegram."
+  />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(30, 91, 255, 0.18),
+          transparent 38%
+        ),
+        linear-gradient(
+          145deg,
+          #020617 0%,
+          #071329 45%,
+          #020617 100%
+        );
+
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(37, 99, 235, 0.13);
+      filter: blur(90px);
+      top: -180px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 560px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-name {
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+    }
+
+    .brand-subtitle {
+      margin-top: 5px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #7f8da8;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.075),
+          rgba(255, 255, 255, 0.025)
+        );
+
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 30px;
+
+      box-shadow:
+        0 35px 100px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+
+      padding: 38px 30px 30px;
+      text-align: center;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(96, 165, 250, 0.9),
+          transparent
+        );
+    }
+
+    .secure-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      padding: 7px 12px;
+      border-radius: 999px;
+
+      background: rgba(37, 99, 235, 0.10);
+      border: 1px solid rgba(96, 165, 250, 0.18);
+
+      color: #9fc5ff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .secure-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #60a5fa;
+      box-shadow: 0 0 12px rgba(96, 165, 250, 0.9);
+    }
+
+    .status-icon {
+      width: 88px;
+      height: 88px;
+      margin: 28px auto 22px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        radial-gradient(
+          circle at 35% 25%,
+          rgba(255, 255, 255, 0.18),
+          rgba(37, 99, 235, 0.24)
+        );
+
+      border: 1px solid rgba(96, 165, 250, 0.32);
+
+      box-shadow:
+        0 0 0 10px rgba(37, 99, 235, 0.045),
+        0 0 55px rgba(37, 99, 235, 0.22);
+
+      transition: all 0.5s ease;
+    }
+
+    .status-icon svg {
+      width: 38px;
+      height: 38px;
+      stroke: #93c5fd;
+      stroke-width: 2.3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .status-icon.confirmed {
+      background:
+        radial-gradient(
+          circle at 35% 25%,
+          rgba(255, 255, 255, 0.22),
+          rgba(16, 185, 129, 0.25)
+        );
+
+      border-color: rgba(52, 211, 153, 0.4);
+
+      box-shadow:
+        0 0 0 10px rgba(16, 185, 129, 0.05),
+        0 0 65px rgba(16, 185, 129, 0.24);
+    }
+
+    .status-icon.confirmed svg {
+      stroke: #6ee7b7;
+    }
+
+    h1 {
+      font-size: clamp(29px, 7vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -1.4px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      max-width: 430px;
+      margin: 13px auto 0;
+      color: #9ba9c0;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .payment-box {
+      margin-top: 28px;
+      padding: 17px;
+
+      text-align: left;
+
+      background: rgba(2, 6, 23, 0.48);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+    }
+
+    .payment-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+
+      padding: 9px 0;
+    }
+
+    .payment-row + .payment-row {
+      border-top: 1px solid rgba(255, 255, 255, 0.055);
+    }
+
+    .payment-label {
+      color: #73819a;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .payment-value {
+      max-width: 62%;
+      text-align: right;
+      color: #e7edf8;
+      font-size: 13px;
+      font-weight: 650;
+      word-break: break-word;
+    }
+
+    .payment-value.amount {
+      color: #ffffff;
+      font-size: 15px;
+    }
+
+    .status-message {
+      margin-top: 23px;
+      color: #8290a8;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .loader {
+      width: 20px;
+      height: 20px;
+      margin: 17px auto 0;
+
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      border-top-color: #60a5fa;
+
+      animation: spin 0.8s linear infinite;
+    }
+
+    .continue-button {
+      display: none;
+      width: 100%;
+      margin-top: 25px;
+
+      border: 0;
+      border-radius: 15px;
+
+      padding: 15px 20px;
+
+      color: #ffffff;
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #3b82f6
+        );
+
+      box-shadow:
+        0 12px 35px rgba(37, 99, 235, 0.28);
+
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .continue-button:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 16px 40px rgba(37, 99, 235, 0.38);
+    }
+
+    .continue-button.show {
+      display: block;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #53627a;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .footer strong {
+      color: #72809a;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px;
+      }
+
+      .card {
+        padding: 31px 20px 24px;
+        border-radius: 25px;
+      }
+
+      .status-icon {
+        width: 78px;
+        height: 78px;
+      }
+
+      .payment-row {
+        align-items: flex-start;
+      }
+
+      .payment-value {
+        max-width: 58%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <div class="brand">
+      <div class="brand-name">Evermore</div>
+      <div class="brand-subtitle">Secure Digital Activation</div>
+    </div>
+
+    <section class="card">
+
+      <div class="secure-badge">
+        <span class="secure-dot"></span>
+        Bachs Secure Payment
+      </div>
+
+      <div class="status-icon" id="statusIcon">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M12 3v4"></path>
+          <path d="M12 17v4"></path>
+          <path d="M3 12h4"></path>
+          <path d="M17 12h4"></path>
+          <path d="M5.64 5.64l2.83 2.83"></path>
+          <path d="M15.53 15.53l2.83 2.83"></path>
+          <path d="M18.36 5.64l-2.83 2.83"></path>
+          <path d="M8.47 15.53l-2.83 2.83"></path>
+        </svg>
+      </div>
+
+      <h1 id="title">
+        Verifying Payment
+      </h1>
+
+      <p class="subtitle" id="subtitle">
+        We're securely confirming your Bachs payment.
+        Please keep this page open.
+      </p>
+
+      <div class="payment-box">
+
+        <div class="payment-row">
+          <span class="payment-label">
+            Status
+          </span>
+
+          <span
+            class="payment-value"
+            id="paymentStatus"
+          >
+            Detecting transfer…
+          </span>
+        </div>
+
+        <div class="payment-row">
+          <span class="payment-label">
+            Package
+          </span>
+
+          <span
+            class="payment-value"
+            id="packageName"
+          >
+            —
+          </span>
+        </div>
+
+        <div class="payment-row">
+          <span class="payment-label">
+            Amount
+          </span>
+
+          <span
+            class="payment-value amount"
+            id="amount"
+          >
+            —
+          </span>
+        </div>
+
+        <div class="payment-row">
+          <span class="payment-label">
+            Reference
+          </span>
+
+          <span
+            class="payment-value"
+            id="reference"
+          >
+            —
+          </span>
+        </div>
+
+      </div>
+
+      <div
+        class="status-message"
+        id="statusMessage"
+      >
+        Waiting for the Bachs payment confirmation…
+      </div>
+
+      <div
+        class="loader"
+        id="loader"
+      ></div>
+
+      <button
+        class="continue-button"
+        id="continueButton"
+        type="button"
+      >
+        Complete Activation on Telegram
+      </button>
+
+    </section>
+
+    <div class="footer">
+      Payments are processed securely through
+      <strong>Bachs</strong>.
+      <br />
+      Evermore Digital AI
+    </div>
+
+  </main>
+
+  <script>
+    /*
+     * IMPORTANT:
+     * Replace this with your actual Supabase project URL.
+     *
+     * Example:
+     * https://abcdefghijklmnop.supabase.co
+     */
+    const SUPABASE_URL =
+      "https://ykaboidxxyopwwtjkqyj.supabase.co";
+
+    const TELEGRAM_USERNAME =
+      "evermoreadmin";
+
+    const POLL_INTERVAL = 1500;
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const reference =
+      params.get("ref") ||
+      params.get("reference") ||
+      "";
+
+    const checkoutId =
+      params.get("checkout_id") ||
+      params.get("checkoutId") ||
+      "";
+
+    const title =
+      document.getElementById("title");
+
+    const subtitle =
+      document.getElementById("subtitle");
+
+    const paymentStatus =
+      document.getElementById("paymentStatus");
+
+    const packageName =
+      document.getElementById("packageName");
+
+    const amount =
+      document.getElementById("amount");
+
+    const referenceElement =
+      document.getElementById("reference");
+
+    const statusMessage =
+      document.getElementById("statusMessage");
+
+    const loader =
+      document.getElementById("loader");
+
+    const statusIcon =
+      document.getElementById("statusIcon");
+
+    const continueButton =
+      document.getElementById("continueButton");
+
+    let confirmedPayment = null;
+    let redirectStarted = false;
+
+    referenceElement.textContent =
+      reference || checkoutId || "Pending";
+
+    function formatAmount(value, currency) {
+      const number = Number(value);
+
+      if (!Number.isFinite(number)) {
+        return value || "—";
+      }
+
+      return new Intl.NumberFormat(
+        "en-NG",
+        {
+          style: "currency",
+          currency: currency || "NGN",
+          maximumFractionDigits: 0,
+        }
+      ).format(number);
+    }
+
+    function escapeTelegramText(value) {
+      return String(value ?? "")
+        .replace(/&/g, "and")
+        .trim();
+    }
+
+    function buildTelegramUrl(payment) {
+      const customerName =
+        escapeTelegramText(payment.name);
+
+      const customerEmail =
+        escapeTelegramText(payment.email);
+
+      const customerPhone =
+        escapeTelegramText(payment.phone);
+
+      const packageLabel =
+        escapeTelegramText(
+          payment.package_name
+        );
+
+      const paymentReference =
+        escapeTelegramText(
+          payment.reference ||
+          checkoutId ||
+          reference
+        );
+
+      const paymentAmount =
+        formatAmount(
+          payment.amount,
+          payment.currency
+        );
+
+      const message =
+`Hello Evermore Admin 👋
+
+🚀I have completed my payment and I'm ready to complete my activation.
+Here are my details:
+
+Name: ${customerName}
+Email: ${customerEmail}
+Phone: ${customerPhone}
+Package: ${packageLabel}
+Amount: ${paymentAmount}
+Payment Reference: ${paymentReference}
+
+PAID VIA BACHS CHECKOUT✅
+
+Please comfirm and complete my activation. Thank you.`;
+
+      return (
+        "https://t.me/" +
+        TELEGRAM_USERNAME +
+        "?text=" +
+        encodeURIComponent(message)
+      );
+    }
+
+    function showConfirmed(payment) {
+      if (redirectStarted) {
+        return;
+      }
+
+      confirmedPayment = payment;
+
+      title.textContent =
+        "Payment Confirmed";
+
+      subtitle.textContent =
+        "Your payment has been successfully confirmed. Your Evermore activation is ready to be completed.";
+
+      paymentStatus.textContent =
+        "Confirmed";
+
+      packageName.textContent =
+        payment.package_name ||
+        "Evermore";
+
+      amount.textContent =
+        formatAmount(
+          payment.amount,
+          payment.currency
+        );
+
+      referenceElement.textContent =
+        payment.reference ||
+        checkoutId ||
+        reference ||
+        "Confirmed";
+
+      statusMessage.textContent =
+        "Payment verified successfully. Preparing your activation on Telegram…";
+
+      statusIcon.classList.add(
+        "confirmed"
+      );
+
+      statusIcon.innerHTML = `
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M5 12.5l4 4L19 6.5"></path>
+        </svg>
+      `;
+
+      loader.style.display = "none";
+
+      continueButton.classList.add(
+        "show"
+      );
+
+      /*
+       * Give the customer a very short moment
+       * to see the confirmed state, then continue.
+       */
+      setTimeout(() => {
+        redirectToTelegram();
+      }, 1200);
+    }
+
+    function redirectToTelegram() {
+      if (
+        redirectStarted ||
+        !confirmedPayment
+      ) {
+        return;
+      }
+
+      redirectStarted = true;
+
+      const telegramUrl =
+        buildTelegramUrl(
+          confirmedPayment
+        );
+
+      window.location.href =
+        telegramUrl;
+    }
+
+    continueButton.addEventListener(
+      "click",
+      redirectToTelegram
+    );
+
+    async function checkPayment() {
+      try {
+        if (!SUPABASE_URL.startsWith("http")) {
+          throw new Error(
+            "Supabase URL has not been configured."
+          );
+        }
+
+        if (!reference && !checkoutId) {
+          throw new Error(
+            "No payment reference was supplied."
+          );
+        }
+
+        const query = new URLSearchParams();
+
+        if (checkoutId) {
+          query.set(
+            "checkout_id",
+            checkoutId
+          );
+        } else {
+          query.set(
+            "reference",
+            reference
+          );
+        }
+
+        const response =
+          await fetch(
+            `${SUPABASE_URL}/functions/v1/payment-status?${query.toString()}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+              cache: "no-store",
+            }
+          );
+
+        if (!response.ok) {
+          throw new Error(
+            "Payment status request failed."
+          );
+        }
+
+        const result =
+          await response.json();
+
+        if (
+          result.success &&
+          result.found &&
+          result.confirmed &&
+          result.payment
+        ) {
+          showConfirmed(
+            result.payment
+          );
+
+          return true;
+        }
+
+        paymentStatus.textContent =
+          "Detecting transfer…";
+
+        statusMessage.textContent =
+          "We're waiting for Bachs to confirm your payment. This usually takes only a few moments.";
+
+        return false;
+
+      } catch (error) {
+        console.error(
+          "Payment verification error:",
+          error
+        );
+
+        statusMessage.textContent =
+          "Still checking your payment securely…";
+
+        return false;
+      }
+    }
+
+    async function startVerification() {
+      if (!reference && !checkoutId) {
+        title.textContent =
+          "Payment Details Missing";
+
+        subtitle.textContent =
+          "We couldn't find the payment information needed to verify this transaction.";
+
+        paymentStatus.textContent =
+          "Unable to verify";
+
+        statusMessage.textContent =
+          "Please return to your Bachs checkout confirmation and try again.";
+
+        loader.style.display =
+          "none";
+
+        return;
+      }
+
+      while (!redirectStarted) {
+        const confirmed =
+          await checkPayment();
+
+        if (confirmed) {
+          break;
+        }
+
+        await new Promise(
+          (resolve) =>
+            setTimeout(
+              resolve,
+              POLL_INTERVAL
+            )
+        );
+      }
+    }
+
+    startVerification();
+  </script>
+
+</body>
+</html>
